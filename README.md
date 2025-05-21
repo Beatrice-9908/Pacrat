@@ -1,7 +1,7 @@
 # Pacrat/Miscrat  
 
 
-![image](https://github.com/user-attachments/assets/7a3ad23b-49ca-4ad2-922e-94c7c7bb39e8)
+![image](https://github.com/user-attachments/assets/a3e3809e-0cdf-45b1-9cd2-6c49aa70c331)
 
 
 
@@ -71,11 +71,22 @@ This command will run the pacman command pacman -Rsu $(comm -23 <(pacman -Qq | s
 If you use it you will most likely need sudo for this command.
 </details>
   
-## Pacratconf
+## Installation instructions:
+At the moment this project is hosted on my own git hub repos with the PKGBUILD file being located at  https://github.com/Beatrice-9908/pacrat_pkgbuild.git
+&nbsp;  
+
+
+<pre>
+git clone https://github.com/Beatrice-9908/pacrat_pkgbuild.git
+cd pacrat_pkgbuild
+makepkg
+pacman -U pacrat-1.0-1-x86_64.pkg.tar.zst
+</pre>
+## Pacratconf:
 Pacrat's image storage path configuration is stored in the directory /etc/pacrat
 &nbsp;  
 
-When editing the configuration file for pacrat's image storage path only use one space before the start of your path. Omitting the last '/' after your desired path is also required.
+When editing the configuration file only use one space before the start of your path. Omitting the last '/' after your desired path is also required.
 &nbsp;  
 
 <details>
