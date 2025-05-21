@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Remove
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/pacrathook.sh
+

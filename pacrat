@@ -1,0 +1,92 @@
+#!/bin/bash
+
+#Set date variable for image function
+date=$(date +"%m_%d_%H_%M")
+
+#Set directory from config
+dir=$(awk '{print $3}' /etc/pacrat/pacratconf)
+
+#Install all needed packages from pkglist
+warp() {
+  pacman -S --needed - <$dir/pacrat/images/pkglist_$file
+}
+
+#Check how many conflicting packages exist between system and specified pkglist
+check() {
+  printf "# Pacrat Package Check #\n\n"
+  (comm -23 <(pacman -Qqen | sort) <(sort $dir/pacrat/images/pkglist_$file))
+  printf "\nThese packages will be removed\n\n"
+}
+
+#Remove all conflicting packages
+remove() {
+  pacman -Rsu $(comm -23 <(pacman -Qqen | sort) <(sort $dir/pacrat/images/pkglist_$file))
+}
+
+#List all images
+list() {
+  ls -1 $dir/pacrat/images/
+}
+
+#Make parent directory and a copy of the pkglist file with the current date appended to title
+image() {
+  if [[ ! -d $dir/pacrat/images/ ]]; then
+    mkdir $dir/pacrat/images/
+    cp $dir/pacrat/images/pkglist_current $dir/pacrat/images/pkglist_$date
+    echo "Image created by pacrat $date"
+  else
+    cp $dir/pacrat/images/pkglist_current $dir/pacrat/images/pkglist_$date
+    echo "Image created by pacrat $date"
+  fi
+}
+
+#Show packages in given image
+show() {
+  cat $dir/pacrat/images/pkglist_$file | less
+}
+
+#Options
+while getopts ":hils:c:w:r:" arg; do
+  case $arg in
+  h)
+    printf "Usage: pacrat [OPTION] [IMAGEFILE]\n"
+    printf "%s  -h              \tDisplay options\n"
+    printf "%s  -i              \tMake a copy of the pkglist file and append current date to name\n"
+    printf "%s  -l              \tShow all pacrat images\n\n"
+    printf "%s  -s\t[IMAGEFILE]\tShow packages in given image\n"
+    printf "%s  -c\t[IMGAEFILE]\tShows packages that will be removed for a given image\n\n"
+    printf "%s  -w\t[IMAGEFILE]\tInstall all needed packages from pkglist\n"
+    printf "%s  -r\t[IMAGEFILE]\tRemove all conflicting packages between system and pkglist\n"
+    exit 0
+    ;;
+  i)
+    image
+    ;;
+  l)
+    list
+    ;;
+  s)
+    file=$OPTARG
+    show
+    exit 0
+    ;;
+  c)
+    file=$OPTARG
+    check
+    exit 0
+    ;;
+  w)
+    file=$OPTARG
+    warp
+    exit 0
+    ;;
+  r)
+    file=$OPTARG
+    remove
+    exit 0
+    ;;
+  *)
+    exit 0
+    ;;
+  esac
+done
