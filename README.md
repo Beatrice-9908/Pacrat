@@ -48,7 +48,7 @@ Bash script that assists in the creation and maintanence of package list files f
 <summary>listing image files</summary>
 <pre>
 $ pacrat -l
-pkglist m_d_H_M
+pkglist_m_d_H_M
 pkglist_current</pre>
 </details>
 <details>
