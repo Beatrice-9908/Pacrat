@@ -20,12 +20,19 @@ config() {
 #Call config function
 config
 
+#Check for no path or root path set in config
+if [[ -z "${dir// /}" ]] || [[ $dir == "/" ]]; then
+  printf "Pacrat: Save path has been incorrectly set\nNo pkglists have been created\nEdit config in /etc/pacrat/pacratconf to set save path\n"
+  exit 1
+
+fi
+
 #Create files and directories if they doesnt exist; populate files
 if [[ -d "$dir/pacrat/" ]]; then
   pacman -Qqen >$dir/pacrat/images/pkglist_current
   pacman -Qqem >$dir/pacrat/aurimages/foreignpkglist_current
 else
-  mkdir -m 777 -p $dir/pacrat/images/
+  mkdir -m 777 $dir/pacrat/images/
   mkdir -m 777 $dir/pacrat/aurimages/
   touch $dir/pacrat/images/pkglist_current
   chmod 666 $dir/pacrat/images/pkglist_current

@@ -8,25 +8,25 @@ dir=$(awk '{print $3}' /etc/pacrat/pacratconf)
 
 #Create an image of the foreignpkglist_current
 image() {
-  if [[ -f $dir/pacrat/aurimages/foreignpkglist_current ]]; then
-    cp $dir/pacrat/aurimages/foreignpkglist_current $dir/pacrat/aurimages/foreignpkglist_$date
+  if [[ -f "$dir"/pacrat/aurimages/foreignpkglist_current ]]; then
+    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir"/pacrat/aurimages/foreignpkglist_"$date"
     echo "Image created by miscrat $date"
   else
-    touch $dir/pacrat/aurimages/foreignpkglist_current
-    pacman -Qqem >$dir/pacrat/aurimages/foreignpkglist_current
-    cp $dir/pacrat/aurimages/foreignpkglist_current $dir/pacrat/aurimages/foreignpkglist_$date
+    touch "$dir"/pacrat/aurimages/foreignpkglist_current
+    pacman -Qqem >"$dir"/pacrat/aurimages/foreignpkglist_current
+    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir"/pacrat/aurimages/foreignpkglist_"$date"
     echo "Image created by miscrat $date"
   fi
 }
 
 #List all images
 list() {
-  ls -1 $dir/pacrat/aurimages/
+  ls -1 "$dir"/pacrat/aurimages/
 }
 
 #Show packages in given image
 show() {
-  cat $dir/pacrat/aurimages/foreignpkglist_$file | less
+  less "$dir/pacrat/aurimages/foreignpkglist_$file"
 }
 
 #Options
@@ -34,10 +34,10 @@ while getopts ":hils:" arg; do
   case $arg in
   h)
     printf "Usage: miscrat [OPTION] [IMAGEFILE] \n"
-    printf "%s  -h              \tDisplay Options\n"
-    printf "%s  -i              \tMake a copy of the foreignpkglist and append date to name\n"
-    printf "%s  -l              \tShow all miscrat images\n\n"
-    printf "%s  -s\t[IMAGEFILE]\tShow packages in given image\n"
+    printf "  -h              \tDisplay Options\n"
+    printf "  -i              \tMake a copy of the foreignpkglist and append date to name\n"
+    printf "  -l              \tShow all miscrat images\n\n"
+    printf "  -s\t[IMAGEFILE]\tShow packages in given image\n"
     exit 0
     ;;
   i)
@@ -49,6 +49,8 @@ while getopts ":hils:" arg; do
   s)
     file=$OPTARG
     show
+    ;;
+  *)
     exit 0
     ;;
   esac
