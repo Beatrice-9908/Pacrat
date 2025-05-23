@@ -9,12 +9,12 @@ dir=$(awk '{print $3}' /etc/pacrat/pacratconf)
 #Create an image of the foreignpkglist_current
 image() {
   if [[ -f "$dir"/pacrat/aurimages/foreignpkglist_current ]]; then
-    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir"/pacrat/aurimages/foreignpkglist_"$date"
+    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir/pacrat/aurimages/foreignpkglist_$date"
     echo "Image created by miscrat $date"
   else
     touch "$dir"/pacrat/aurimages/foreignpkglist_current
     pacman -Qqem >"$dir"/pacrat/aurimages/foreignpkglist_current
-    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir"/pacrat/aurimages/foreignpkglist_"$date"
+    cp "$dir"/pacrat/aurimages/foreignpkglist_current "$dir/pacrat/aurimages/foreignpkglist_$date"
     echo "Image created by miscrat $date"
   fi
 }

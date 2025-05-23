@@ -14,13 +14,13 @@ warp() {
 #Check how many conflicting packages exist between system and specified pkglist
 check() {
   printf "# Pacrat Package Check #\n\n"
-  (comm -23 <(pacman -Qqen | sort) <(sort "$dir"/pacrat/images/pkglist_"$file"))
+  (comm -23 <(pacman -Qqen | sort) <(sort "$dir/pacrat/images/pkglist_$file"))
   printf "\nThese packages will be removed\n\n"
 }
 
 #Remove all conflicting packages
 remove() {
-  pacman -Rsu "$(comm -23 <(pacman -Qqen | sort) <(sort "$dir"/pacrat/images/pkglist_"$file"))"
+  pacman -Rsu "$(comm -23 <(pacman -Qqen | sort) <(sort "$dir/pacrat/images/pkglist_$file"))"
 }
 
 #List all images
