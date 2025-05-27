@@ -32,9 +32,9 @@ if [[ -d "$dir/pacrat/" ]]; then
   pacman -Qqen >"$dir"/pacrat/images/pkglist_current
   pacman -Qqem >"$dir"/pacrat/aurimages/foreignpkglist_current
 else
-  mkdir -p "$dir"/pacrat/images/
+  mkdir -p -m 777 "$dir"/pacrat/images/
   chmod 755 "$dir"/pacrat/
-  mkdir -m 755 "$dir"/pacrat/aurimages/
+  mkdir -m 777 "$dir"/pacrat/aurimages/
   touch "$dir"/pacrat/images/pkglist_current
   chmod 644 "$dir"/pacrat/images/pkglist_current
   touch "$dir"/pacrat/aurimages/foreignpkglist_current
